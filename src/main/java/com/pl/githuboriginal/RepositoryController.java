@@ -31,6 +31,8 @@ public class RepositoryController {
                     "status", HttpStatus.NOT_FOUND.value(),
                     "message", "User not found"
             ), HttpStatus.NOT_FOUND);
+        } catch (FeignException.Forbidden e) {
+            return new ResponseEntity<>(Map.of("status", HttpStatus.FORBIDDEN.value(), "message", "API rate limit exceeded"), HttpStatus.FORBIDDEN);
         } catch (Exception e) {
             return new ResponseEntity<>(Map.of(
                     "status", HttpStatus.INTERNAL_SERVER_ERROR.value(),
